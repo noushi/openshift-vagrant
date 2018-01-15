@@ -1,0 +1,6 @@
+*~
+*.bak
+*.pyc
+*.retry
+.vagrant
+.ssh
