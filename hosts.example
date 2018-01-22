@@ -196,7 +196,7 @@ openshift_release=v3.7
 # htpasswd auth
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
 # Defining htpasswd users
-#openshift_master_htpasswd_users={'user1': '<pre-hashed password>', 'user2': '<pre-hashed password>'}
+openshift_master_htpasswd_users={'joe': '$apr1$LB4KhoUd$2QRUqJTtbFnDeal80WI2R/', 'alice': '$apr1$LB4KhoUd$2QRUqJTtbFnDeal80WI2R/'}
 # or
 #openshift_master_htpasswd_file=<path to local pre-generated htpasswd file>
 
