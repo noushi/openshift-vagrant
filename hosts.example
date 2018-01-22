@@ -5,6 +5,7 @@
 masters
 nodes
 etcd
+glusterfs
 #lb
 #nfs
 
@@ -1087,3 +1088,14 @@ ose3-master.example.com
 ose3-master.example.com
 ose3-node1.example.com openshift_ip=172.22.22.131 openshift_node_labels="{'region': 'primary', 'zone': 'default'}"
 ose3-node2.example.com openshift_ip=172.22.22.132 openshift_node_labels="{'region': 'primary', 'zone': 'default'}"
+
+# Specify the glusterfs group, which contains the nodes that will host
+# GlusterFS storage pods. At a minimum, each node must have a
+# "glusterfs_devices" variable defined. This variable is a list of block
+# devices the node will have access to that is intended solely for use as
+# GlusterFS storage. These block devices must be bare (e.g. have no data, not
+# be marked as LVM PVs), and will be formatted.
+[glusterfs]
+ose3-master.example.com glusterfs_devices='[ "/dev/vdb" ]'
+ose3-node1.example.com glusterfs_devices='[ "/dev/vdb" ]'
+ose3-node2.example.com glusterfs_devices='[ "/dev/vdb" ]'
