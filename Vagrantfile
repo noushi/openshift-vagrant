@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
     libvirt.storage :file, :device => 'vdb', :size => '20G', :type => 'qcow2', :cache => 'writeback'
   end
 
-  config.vm.define 'control' do |vmconfig|
+  config.vm.define 'control', primary: true do |vmconfig|
     vmconfig.vm.hostname = 'control.example.com'
     vmconfig.vm.network :private_network, :ip => '172.22.22.101'
 
