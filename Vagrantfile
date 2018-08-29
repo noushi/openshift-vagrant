@@ -16,6 +16,12 @@ Vagrant.configure("2") do |config|
 		EOF
   SHELL
 
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.memory = 4096
+    libvirt.cpus = 4
+    libvirt.storage :file, :device => 'vdb', :size => '20G', :type => 'qcow2', :cache => 'writeback'
+  end
+
   config.vm.define 'control' do |vmconfig|
     vmconfig.vm.hostname = 'control.example.com'
     vmconfig.vm.network :private_network, :ip => '172.22.22.101'
@@ -29,34 +35,16 @@ Vagrant.configure("2") do |config|
   config.vm.define 'ose3-master' do |vmconfig|
     vmconfig.vm.hostname = 'ose3-master.example.com'
     vmconfig.vm.network :private_network, :ip => '172.22.22.122'
-
-    vmconfig.vm.provider :libvirt do |libvirt|
-      libvirt.memory = 4096
-      libvirt.cpus = 4
-      libvirt.storage :file, :device => 'vdb', :size => '20G', :type => 'qcow2', :cache => 'writeback'
-    end
   end
 
   config.vm.define 'ose3-node1' do |vmconfig|
     vmconfig.vm.hostname = 'ose3-node1.example.com'
     vmconfig.vm.network :private_network, :ip => '172.22.22.131'
-
-    vmconfig.vm.provider :libvirt do |libvirt|
-      libvirt.memory = 4096
-      libvirt.cpus = 4
-      libvirt.storage :file, :device => 'vdb', :size => '20G', :type => 'qcow2', :cache => 'writeback'
-    end
   end
 
   config.vm.define 'ose3-node2' do |vmconfig|
     vmconfig.vm.hostname = 'ose3-node2.example.com'
     vmconfig.vm.network :private_network, :ip => '172.22.22.132'
-
-    vmconfig.vm.provider :libvirt do |libvirt|
-      libvirt.memory = 4096
-      libvirt.cpus = 4
-      libvirt.storage :file, :device => 'vdb', :size => '20G', :type => 'qcow2', :cache => 'writeback'
-    end
   end
 
 end
