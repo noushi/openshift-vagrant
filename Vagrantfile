@@ -26,6 +26,11 @@ Vagrant.configure("2") do |config|
     libvirt.storage :file, :device => 'vdb', :size => '20G', :type => 'qcow2', :cache => 'writeback'
   end
 
+  config.vm.provider "virtualbox" do |vb|
+    vb.cpus = 4
+    vb.memory = 4096
+  end
+
   config.vm.define 'control', primary: true do |vmconfig|
     vmconfig.vm.hostname = 'control.example.com'
     vmconfig.vm.network :private_network, :ip => '172.22.22.101'
@@ -33,6 +38,11 @@ Vagrant.configure("2") do |config|
     vmconfig.vm.provider :libvirt do |libvirt|
       libvirt.memory = 1024
       libvirt.cpus = 4
+    end
+
+    config.vm.provider "virtualbox" do |vb|
+      vb.cpus = 4
+      vb.memory = 1024
     end
   end
 
