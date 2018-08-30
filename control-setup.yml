@@ -1,0 +1,25 @@
+- name: Configure control node
+  hosts: localhost
+  vars:
+    openshift_version: 310
+    pkgs:
+      - "centos-release-openshift-origin{{ openshift_version }}"
+      - openshift-ansible
+
+  tasks:
+    - name: Install EPEL
+      yum:
+        name: 'epel-release'
+        state: present
+
+    - name: copy ansible inventory
+      copy: src=/vagrant/hosts.example
+        dest=/etc/ansible/hosts
+        owner=root group=root mode=0644
+
+    - name: "Install Yum configuration for OpenShift Origin {{ openshift_version }} packages"
+      yum:
+        name: "{{item}}"
+        state: present
+      with_items:
+        - "{{ pkgs }}"
