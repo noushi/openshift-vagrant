@@ -16,6 +16,10 @@ Vagrant.configure("2") do |config|
 		EOF
   SHELL
 
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.scope = :box
+  end
+
   config.vm.provider :libvirt do |libvirt|
     libvirt.memory = 4096
     libvirt.cpus = 4
