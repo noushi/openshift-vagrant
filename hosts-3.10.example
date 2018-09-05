@@ -6,7 +6,7 @@ masters
 nodes
 etcd
 #lb
-#nfs
+nfs
 
 # Set variables common for all OSEv3 hosts
 [OSEv3:vars]
@@ -1088,3 +1088,6 @@ ose3-master.example.com
 ose3-master.example.com openshift_node_group_name='node-config-master'
 ose3-node1.example.com openshift_ip=172.22.22.131 openshift_node_labels="{'region': 'primary', 'zone': 'default'}" openshift_node_group_name='node-config-compute'
 ose3-node2.example.com openshift_ip=172.22.22.132 openshift_node_labels="{'region': 'primary', 'zone': 'default'}" openshift_node_group_name='node-config-compute'
+
+[nfs]
+facility.example.com openshift_ip=172.22.22.141
