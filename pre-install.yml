@@ -66,6 +66,12 @@
         state: present
       when: ansible_distribution == "RedHat"
 
+    - name: Install EPEL repo
+      yum:
+        name: "epel-release"
+        state: present
+          
+      
 #    - name: Install Ansible module dependencies
 #      yum: name={{item}} state=present enablerepo={{epel_repo_id}}
 #      with_items:
@@ -130,6 +136,14 @@
       - kexec-tools
       - sos
       - psacct
+      - yum-utils
+      - iptables-services
+      - python36
+      - PyYAML
+      - python-ipaddress
+      - libsemanage-python
+      - python-docker
+      - docker
 
 #     - name: Disable NetworkManager service
 #       service: name=NetworkManager state=stopped enabled=false
