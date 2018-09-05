@@ -5,6 +5,12 @@
     pkgs:
       - "centos-release-openshift-origin{{ openshift_version }}"
       - openshift-ansible
+      - python36
+      - PyYAML
+      - python-ipaddress
+      - libsemanage-python
+      - python-docker
+      - docker
 
   tasks:
     - name: Install EPEL
