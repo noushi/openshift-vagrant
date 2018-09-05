@@ -42,11 +42,37 @@ oc delete route registry-console -n default
 # yum install wget git net-tools bind-utils yum-utils iptables-services bridge-utils bash-completion kexec-tools sos psacct
 
 
+
 ```
 IMAGES_TAR=/root/origin-3.10-images.tar
 MASTER=ose3-master.example.com
 ssh root@$MASTER docker save '$(docker images -q)' -o $IMAGES_TAR
 rsync -avz root@$MASTER:$IMAGES_TAR /vagrant/cache/
+```
+
+## metrics
+```
+ansible-playbook -i hosts-3.10.example /usr/share/ansible/openshift-ansible/playbooks/openshift-metrics/config.yml
+```
+
+create NFS pv
+```
+oc create -f - <<EOF
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: cassandra-metrics-1
+  labels:
+    storage: metrics
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    server: facility.example.com
+    path: "/exports/metrics"
+EOF
 ```
 
 # Notes

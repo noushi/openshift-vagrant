@@ -34,7 +34,9 @@ openshift_deployment_type=origin
 # use this to lookup the latest exact version of the container images, which is the tag actually used to configure
 # the cluster. For RPM installations we just verify the version detected in your configured repos matches this
 # release.
+
 openshift_release=v3.10
+
 
 # Specify an exact container image tag to install or configure.
 # WARNING: This value will be used for all hosts in containerized environments, even those that have another version installed.
@@ -542,9 +544,25 @@ openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 
 #openshift_metrics_storage_access_modes=['ReadWriteOnce']
 #openshift_metrics_storage_host=nfs.example.com
 #openshift_metrics_storage_nfs_directory=/exports
-#openshift_metrics_storage_volume_name=metrics
-#openshift_metrics_storage_volume_size=10Gi
-#openshift_metrics_storage_labels={'storage': 'metrics'}
+openshift_metrics_storage_volume_name=metrics
+openshift_metrics_storage_volume_size=10Gi
+openshift_metrics_storage_labels={'storage': 'metrics'}
+
+openshift_metrics_install_metrics=True
+# NFS is not supported on origin/ocp anymore
+#openshift_enable_unsupported_configurations=True
+
+# Since 3.10 metrics images aren't available on docker hub, we have to explicitly use another version
+# https://github.com/openshift/origin-metrics/issues/429
+openshift_metrics_cassandra_image="docker.io/openshift/origin-metrics-cassandra:v3.11.0"
+openshift_metrics_hawkular_metrics_image="docker.io/openshift/origin-metrics-hawkular-metrics:v3.11.0"
+openshift_metrics_heapster_image="docker.io/openshift/origin-metrics-heapster:v3.11.0"
+# https://github.com/openshift/origin-metrics/issues/429#issuecomment-417124646
+openshift_metrics_schema_installer_image="docker.io/alv91/origin-metrics-schema-installer:v3.10.0"
+
+
+
+
 #
 # Option C - Dynamic -- If openshift supports dynamic volume provisioning for
 # your cloud platform use this.
