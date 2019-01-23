@@ -41,12 +41,13 @@
     - yum-utils
     - iptables-services
     extra_pkgs:
-    - python36
+#    - python36 #TODO: add origin test
     - PyYAML
     - python-ipaddress
     - libsemanage-python
-    - python-docker
-
+    - python-docker-py
+    - iproute
+    - dbus-python
 
 #    - name: bootstrap epel-release install
 #      copy: src=ansible-bootstrap-epel.repo
@@ -150,7 +151,7 @@
         state: present
       with_items:
       - "{{ openshift_base_pkgs }}"
-#      - "{{ extra_pkgs }}" #TODO: add origin test
+      - "{{ extra_pkgs }}"
       - docker
 
 #     - name: Disable NetworkManager service
