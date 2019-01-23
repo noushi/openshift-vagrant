@@ -41,11 +41,11 @@
     - yum-utils
     - iptables-services
     extra_pkgs:
-      - python36
-      - PyYAML
-      - python-ipaddress
-      - libsemanage-python
-      - python-docker
+    - python36
+    - PyYAML
+    - python-ipaddress
+    - libsemanage-python
+    - python-docker
 
 
 #    - name: bootstrap epel-release install
