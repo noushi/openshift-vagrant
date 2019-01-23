@@ -22,7 +22,13 @@
     - rhel-7-server-optional-rpms
     - rhel-7-fast-datapath-rpms
     - "rhel-7-server-ose-{{openshift_major}}.{{openshift_minor}}-rpms"
-    - "rhel-7-server-ansible-2.6-rpms"
+    rhsm_enable_repos: |
+      subscription-manager repos 
+      --enable="rhel-7-server-rpms" 
+      --enable="rhel-7-server-extras-rpms" 
+      --enable="rhel-7-server-ose-{{openshift_major}}.{{openshift_minor}}-rpms" 
+      --enable="rhel-7-server-ansible-2.6-rpms"
+
 
 #    - name: bootstrap epel-release install
 #      copy: src=ansible-bootstrap-epel.repo
@@ -54,23 +60,20 @@
       run_once: true
 
     - name: Enable repos on control host
-      rhsm_repo:
-        repos: "{{ ocp_repos }}"
-        state: present
+      command: "{{ rhsm_enable_repos }}"
       when: ansible_distribution == "RedHat"
       delegate_to: localhost
       run_once: true
 
     - name: Enable repos on OpenShift hosts
-      rhsm_repo:
-        repos: "{{ ocp_repos }}"
-        state: present
+      command: "{{ rhsm_enable_repos }}"
       when: ansible_distribution == "RedHat"
 
     - name: Install EPEL repo
       yum:
         name: "epel-release"
         state: present
+      when: ansible_distribution == "CentOS"
           
       
 #    - name: Install Ansible module dependencies
@@ -118,7 +121,7 @@
         name: "{{item}}"
         state: present
       with_items:
-      - atomic-openshift-utils
+      - openshift-ansible
       when: ansible_distribution == "RedHat"
       delegate_to: localhost
       run_once: true
