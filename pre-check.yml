@@ -1,0 +1,28 @@
+- name: Run some preflight checks
+  hosts: all
+
+  tasks:
+    # prettier than ansible_distribution_*
+    - name: check Red Hat release
+      command: cat /etc/redhat-release 
+      register: release_list
+
+    - name: show Red Hat release
+      debug:
+        msg: "{{ release_list.stdout.split('\n') }}"
+    
+    - name: check RHSM subscription
+      command: subscription-manager list
+      register: rhsm_list
+
+    - name: show RHSM status
+      debug:
+        msg: "{{ rhsm_list.stdout.split('\n') }}"
+    
+    - name: check disks
+      command: lsblk
+      register: disk_list
+
+    - name: show disks
+      debug:
+        msg: "{{ disk_list.stdout.split('\n') }}"
