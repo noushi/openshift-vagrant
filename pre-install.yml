@@ -28,6 +28,24 @@
       --enable="rhel-7-server-extras-rpms" 
       --enable="rhel-7-server-ose-{{openshift_major}}.{{openshift_minor}}-rpms" 
       --enable="rhel-7-server-ansible-2.6-rpms"
+    openshift_base_pkgs:
+    - wget
+    - git
+    - net-tools
+    - bind-utils
+    - bridge-utils
+    - bash-completion
+    - kexec-tools
+    - sos
+    - psacct
+    - yum-utils
+    - iptables-services
+    extra_pkgs:
+      - python36
+      - PyYAML
+      - python-ipaddress
+      - libsemanage-python
+      - python-docker
 
 
 #    - name: bootstrap epel-release install
@@ -131,22 +149,8 @@
         name: "{{item}}"
         state: present
       with_items:
-      - wget
-      - git
-      - net-tools
-      - bind-utils
-      - bridge-utils
-      - bash-completion
-      - kexec-tools
-      - sos
-      - psacct
-      - yum-utils
-      - iptables-services
-      - python36
-      - PyYAML
-      - python-ipaddress
-      - libsemanage-python
-      - python-docker
+      - "{{ openshift_base_pkgs }}"
+#      - "{{ extra_pkgs }}" #TODO: add origin test
       - docker
 
 #     - name: Disable NetworkManager service
