@@ -4,3 +4,7 @@
 *.retry
 .vagrant
 .ssh
+rsrc/
+misc/
+cache/
+disks/
