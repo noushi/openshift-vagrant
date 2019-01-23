@@ -5,8 +5,9 @@ load '../el-vagrant/Vagrantfile'
 
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "centos7.4"
-
+#  config.vm.box = "centos7.4"
+  config.vm.box = "rhel-7.4-vbox"
+  
   config.vm.provision "shell", name: "openshift", inline: <<-SHELL
     yum update -y
 
