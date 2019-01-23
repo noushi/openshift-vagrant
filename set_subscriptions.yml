@@ -1,0 +1,20 @@
+- name: set RHSM subscriptions
+  hosts: all
+  vars_files:
+    - vars/subscriptions.yml
+
+  tasks:
+    - name: get subscription pool id
+      command: sh -c "subscription-manager list --available --matches '{{ subscription_name }}' | grep 'Pool ID:' | cut -d':' -f2"
+      when: subscription_name is defined
+      register: pool_id
+        
+    - name: set subscriptions
+      command: "subscription-manager attach --pool {{ pool_id.stdout }}"
+      register: result
+      when: subscription_name is defined
+
+    - name: show result
+      debug: 
+        msg: "{{ result.stdout }}"
+      when: subscription_name is defined
