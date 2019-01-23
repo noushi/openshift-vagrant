@@ -40,6 +40,7 @@
     - psacct
     - yum-utils
     - iptables-services
+    - docker
     extra_pkgs:
 #    - python36 #TODO: add origin test
     - PyYAML
@@ -48,6 +49,11 @@
     - python-docker-py
     - iproute
     - dbus-python
+    extra_ocp_pkgs:
+    - atomic-openshift-excluder
+    - atomic-openshift-docker-excluder
+    - atomic
+    - skopeo
 
 #    - name: bootstrap epel-release install
 #      copy: src=ansible-bootstrap-epel.repo
@@ -152,7 +158,7 @@
       with_items:
       - "{{ openshift_base_pkgs }}"
       - "{{ extra_pkgs }}"
-      - docker
+      - "{{ extra_ocp_pkgs }}" #TODO: only on ocp
 
 #     - name: Disable NetworkManager service
 #       service: name=NetworkManager state=stopped enabled=false
