@@ -86,6 +86,8 @@ Vagrant.configure("2") do |config|
     vmconfig.vm.provider "virtualbox" do |vb|
       vb.cpus = 4
       vb.memory = 4096
+      disk = prepare_disk vmconfig.vm.hostname
+      add_disk vb, disk, 5*GB
     end
   end
 
@@ -103,6 +105,8 @@ Vagrant.configure("2") do |config|
     vmconfig.vm.provider "virtualbox" do |vb|
       vb.cpus = 4
       vb.memory = 4096
+      disk = prepare_disk vmconfig.vm.hostname
+      add_disk vb, disk, 5*GB
     end    
   end
 
@@ -120,6 +124,27 @@ Vagrant.configure("2") do |config|
     vmconfig.vm.provider "virtualbox" do |vb|
       vb.cpus = 4
       vb.memory = 4096
+      disk = prepare_disk vmconfig.vm.hostname
+      add_disk vb, disk, 5*GB
+    end
+  end
+
+  config.vm.define 'ose3-node3' do |vmconfig|
+    vmconfig.vm.hostname = 'ose3-node3.example.com'
+    vmconfig.vm.network :private_network, :ip => '172.22.22.133'
+    vmconfig.hostmanager.aliases = %w(ose3-node3)
+
+    vmconfig.vm.provider :libvirt do |libvirt|
+      libvirt.memory = 4096
+      libvirt.cpus = 4
+      libvirt.storage :file, :device => 'vdb', :size => '20G', :type => 'qcow2', :cache => 'writeback'
+    end
+
+    vmconfig.vm.provider "virtualbox" do |vb|
+      vb.cpus = 4
+      vb.memory = 4096
+      disk = prepare_disk vmconfig.vm.hostname
+      add_disk vb, disk, 5*GB
     end    
   end
 
