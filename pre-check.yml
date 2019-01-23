@@ -12,7 +12,7 @@
         msg: "{{ release_list.stdout.split('\n') }}"
     
     - name: check RHSM subscription
-      command: subscription-manager list
+      command: sh -c 'subscription-manager list --consumed  |grep "^Subscription Name"' # subscription-manager list
       register: rhsm_list
 
     - name: show RHSM status
