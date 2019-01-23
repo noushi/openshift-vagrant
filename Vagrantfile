@@ -3,6 +3,22 @@
 
 load '../el-vagrant/Vagrantfile'
 
+GB=1024
+
+require 'fileutils'
+
+def prepare_disk(hostname)
+  base_dir = '.vagrant/disks/' + hostname
+  FileUtils.mkdir_p base_dir
+  base_dir + '/disk.vdi'
+end
+
+def add_disk(vb, disk, size)
+  unless File.exist?(disk)
+    vb.customize ['createhd', '--filename', disk, '--variant', 'Standard', '--size', size]
+  end
+  vb.customize ['storageattach', :id,  '--storagectl', 'IDE Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', disk]
+end
 
 Vagrant.configure("2") do |config|
 #  config.vm.box = "centos7.4"
@@ -19,7 +35,7 @@ Vagrant.configure("2") do |config|
   SHELL
 
   if Vagrant.has_plugin?("vagrant-cachier")
-#    config.cache.scope = :box
+    config.cache.scope = :box unless ENV['VAGRANT_CACHIER_BOX_CACHING'] == false
   end
 
   config.vm.define 'control', primary: true do |vmconfig|
@@ -35,6 +51,8 @@ Vagrant.configure("2") do |config|
     vmconfig.vm.provider "virtualbox" do |vb|
       vb.cpus = 4
       vb.memory = 1024
+      disk = prepare_disk vmconfig.vm.hostname
+      add_disk vb, disk, 5*GB
     end
   end
   
