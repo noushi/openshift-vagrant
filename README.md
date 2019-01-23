@@ -23,6 +23,10 @@ Add or remove machines as needed. Then start Vagrant machines and install OpenSh
 
 1. Checkout this repository and [el-vagrant](https://github.com/appuio/el-vagrant) into the same directory.
 2. Adjust `memory` and `cpus` values in the `Vagrantfile` as needed
+2. Set this env var to dismiss the `vagrant-triggers` warning: 
+```
+export VAGRANT_USE_VAGRANT_TRIGGERS=false
+```
 3. Start the Vagrant machines: 
 
        vagrant up
