@@ -99,7 +99,7 @@
         name: "epel-release"
         state: present
       when: ansible_distribution == "CentOS"
-          
+      tags: pre-install-pkgs, pkg
       
 #    - name: Install Ansible module dependencies
 #      yum: name={{item}} state=present enablerepo={{epel_repo_id}}
@@ -150,6 +150,7 @@
       when: ansible_distribution == "RedHat"
       delegate_to: localhost
       run_once: true
+      tags: pre-install-pkgs, pkg
 
     - name: Install prerequisites on OpenShift hosts
       yum:
@@ -159,6 +160,7 @@
       - "{{ openshift_base_pkgs }}"
       - "{{ extra_pkgs }}"
       - "{{ extra_ocp_pkgs }}" #TODO: only on ocp
+      tags: pre-install-pkgs, pkg
 
 #     - name: Disable NetworkManager service
 #       service: name=NetworkManager state=stopped enabled=false
