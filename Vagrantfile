@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "rhel-7.4-vbox"
   
   config.vm.provision "shell", name: "openshift", inline: <<-SHELL
-    yum update -y
+    # yum update -y
 
     mkdir -p /etc/dnsmasq.d
     cat <<-EOF >/etc/dnsmasq.d/vagrant.conf
