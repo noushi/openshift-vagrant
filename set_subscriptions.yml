@@ -8,7 +8,12 @@
       command: sh -c "subscription-manager list --available --matches '{{ subscription_name }}' | grep 'Pool ID:' | cut -d':' -f2"
       when: subscription_name is defined
       register: pool_id
-        
+
+    - name: show pool id
+      debug:
+        msg: "{{ pool_id.stdout }}"
+      when: subscription_name is defined
+
     - name: set subscriptions
       command: "subscription-manager attach --pool {{ pool_id.stdout }}"
       register: result
