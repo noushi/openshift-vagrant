@@ -11,13 +11,21 @@
       debug:
         msg: "{{ release_list.stdout.split('\n') }}"
     
-    - name: check RHSM subscription
-      command: sh -c 'subscription-manager list --consumed  |grep "^Subscription Name"' # subscription-manager list
+    - name: check RHSM status
+      command: subscription-manager list
       register: rhsm_list
 
     - name: show RHSM status
       debug:
         msg: "{{ rhsm_list.stdout.split('\n') }}"
+
+    - name: check RHSM subscription
+      command: sh -c 'subscription-manager list --consumed  |grep "^Subscription Name"'
+      register: rhsm_sub_list
+
+    - name: show RHSM subscription status
+      debug:
+        msg: "{{ rhsm_sub_list.stdout.split('\n') }}"
     
     - name: check disks
       command: lsblk
