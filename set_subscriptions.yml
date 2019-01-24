@@ -4,7 +4,7 @@
     - vars/subscriptions.yml
 
   tasks:
-    - name: get subscription pool id
+    - name: get subscription pool id for "{{ subscription_name }}"
       command: sh -c "subscription-manager list --available --matches '{{ subscription_name }}' | grep 'Pool ID:' | cut -d':' -f2"
       when: subscription_name is defined
       register: pool_id
