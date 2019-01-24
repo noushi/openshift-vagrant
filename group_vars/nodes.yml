@@ -1,1 +1,1 @@
-subscription_name: "{{ openshift_subscription }}"
+subscription_name: "'{{ openshift_subscription }}'"
