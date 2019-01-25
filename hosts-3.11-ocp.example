@@ -1080,7 +1080,7 @@ openshift_metrics_install_metrics=True
 #openshift_master_open_ports=[{"service":"svc1","port":"11/tcp"}]
 #openshift_node_open_ports=[{"service":"svc2","port":"12-13/tcp"},{"service":"svc3","port":"14/udp"}]
 
-openshift_disable_check=disk_availability,docker_storage,memory_availability
+openshift_disable_check=disk_availability,docker_storage,memory_availability,docker_image_availability
 
 # host group for masters
 [masters]
