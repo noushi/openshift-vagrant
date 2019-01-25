@@ -1,3 +1,4 @@
 container_storage_subscription: 'Container Storage Add-On for OpenShift Container Platform, Self-Support (3 Nodes, NFR, Partner Only)'
 
-openshift_subscription: 'Red Hat OpenShift, Standard Support (10 Cores, NFR, Partner Only)'
+#openshift_subscription: 'Red Hat OpenShift, Standard Support (10 Cores, NFR, Partner Only)'
+openshift_subscription: 'Red Hat OpenShift Container Platform for Certified Cloud and Service Providers'
