@@ -9,7 +9,7 @@
       - PyYAML
       - python-ipaddress
       - libsemanage-python
-      - python-docker
+      - python-docker-py
       - docker
 
   tasks:

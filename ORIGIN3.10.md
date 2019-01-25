@@ -10,6 +10,8 @@ ansible-playbook ./control-setup.yml
 
 ansible-playbook -i hosts-3.10.example ./pre-install.yml
 
+sed -i 's/python-docker/python-docker-py/' /usr/share/ansible/openshift-ansible/playbooks/init/base_packages.yml
+
 ansible-playbook -i hosts-3.10.example /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml 
 ansible-playbook -i hosts-3.10.example /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
 ```
