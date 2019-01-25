@@ -38,6 +38,11 @@ Vagrant.configure("2") do |config|
     config.cache.scope = :box unless ENV['VAGRANT_CACHIER_BOX_CACHING'] == false
   end
 
+  # intel cards (e1000) are so buggy
+  config.vm.provider "virtualbox" do |v|
+    v.default_nic_type = "virtio"
+  end
+
   config.vm.define 'control', primary: true do |vmconfig|
     vmconfig.vm.hostname = 'control.example.com'
     vmconfig.vm.network :private_network, :ip => '172.22.22.101'
