@@ -2,8 +2,9 @@
   hosts: localhost
   vars:
     openshift_version: 310
-    pkgs:
+    initial_pkgs:
       - "centos-release-openshift-origin{{ openshift_version }}"
+    pkgs:
       - openshift-ansible
       - python36
       - PyYAML
@@ -22,6 +23,13 @@
       copy: src=/vagrant/hosts.example
         dest=/etc/ansible/hosts
         owner=root group=root mode=0644
+
+    - name: "Install initial packages for OpenShift Origin {{ openshift_version }} packages"
+      yum:
+        name: "{{item}}"
+        state: present
+      with_items:
+        - "{{ initial_pkgs }}"
 
     - name: "Install Yum configuration for OpenShift Origin {{ openshift_version }} packages"
       yum:
