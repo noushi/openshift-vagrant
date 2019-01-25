@@ -1080,6 +1080,12 @@ openshift_metrics_install_metrics=True
 #openshift_master_open_ports=[{"service":"svc1","port":"11/tcp"}]
 #openshift_node_open_ports=[{"service":"svc2","port":"12-13/tcp"},{"service":"svc3","port":"14/udp"}]
 
+# CRI-O
+openshift_use_crio=true
+openshift_use_crio_only=False
+openshift_crio_enable_docker_gc=True
+openshift_master_admission_plugin_config={"ValidatingAdmissionWebhook":{"configuration":{"kind": "DefaultAdmissionConfig","apiVersion": "v1","disable": false}},"MutatingAdmissionWebhook":{"configuration":{"kind": "DefaultAdmissionConfig","apiVersion": "v1","disable": false}}}
+
 openshift_disable_check=disk_availability,docker_storage,memory_availability,docker_image_availability
 
 # host group for masters
@@ -1099,10 +1105,10 @@ ose3-master.example.com
 # However, in order to ensure that your masters are not burdened with running pods you should
 # make them unschedulable by adding openshift_schedulable=False any node that's also a master.
 [nodes]
-ose3-master.example.com openshift_node_group_name='node-config-master-infra'
-ose3-node1.example.com openshift_ip=172.22.22.131 openshift_node_labels="{'region': 'primary', 'zone': 'default'}" openshift_node_group_name='node-config-compute'
-ose3-node2.example.com openshift_ip=172.22.22.132 openshift_node_labels="{'region': 'primary', 'zone': 'default'}" openshift_node_group_name='node-config-compute'
-ose3-node3.example.com openshift_ip=172.22.22.133 openshift_node_labels="{'region': 'primary', 'zone': 'default'}" openshift_node_group_name='node-config-compute'
+ose3-master.example.com openshift_node_group_name='node-config-master-infra-crio'
+ose3-node1.example.com openshift_ip=172.22.22.131 openshift_node_labels="{'region': 'primary', 'zone': 'default'}" openshift_node_group_name='node-config-compute-crio'
+ose3-node2.example.com openshift_ip=172.22.22.132 openshift_node_labels="{'region': 'primary', 'zone': 'default'}" openshift_node_group_name='node-config-compute-crio'
+ose3-node3.example.com openshift_ip=172.22.22.133 openshift_node_labels="{'region': 'primary', 'zone': 'default'}" openshift_node_group_name='node-config-compute-crio'
 
 [nfs]
 facility.example.com openshift_ip=172.22.22.141
