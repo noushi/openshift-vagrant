@@ -191,6 +191,9 @@ openshift_release=v3.11
 # To update registry auth credentials, uncomment the following:
 #oreg_auth_credentials_replace: True
 
+oreg_url=registry.redhat.io/openshift3/ose-${component}:${version}
+oreg_test_login=false
+
 # OpenShift repository configuration
 #openshift_additional_repos=[{'id': 'openshift-origin-copr', 'name': 'OpenShift Origin COPR', 'baseurl': 'https://copr-be.cloud.fedoraproject.org/results/maxamillion/origin-next/epel-7-$basearch/', 'enabled': 1, 'gpgcheck': 1, 'gpgkey': 'https://copr-be.cloud.fedoraproject.org/results/maxamillion/origin-next/pubkey.gpg'}]
 #openshift_repos_enable_testing=false
