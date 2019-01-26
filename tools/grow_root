@@ -1,0 +1,7 @@
+#!/bin/bash
+
+
+swapoff -a
+lvremove  /dev/rhel/swap 
+lvextend -l +100%FREE /dev/rhel/root 
+xfs_growfs /
