@@ -1084,7 +1084,7 @@ openshift_metrics_schema_installer_image="docker.io/alv91/origin-metrics-schema-
 #openshift_master_open_ports=[{"service":"svc1","port":"11/tcp"}]
 #openshift_node_open_ports=[{"service":"svc2","port":"12-13/tcp"},{"service":"svc3","port":"14/udp"}]
 
-openshift_disable_check=disk_availability,docker_storage,memory_availability
+openshift_disable_check=disk_availability,docker_storage,memory_availability,package_availability,docker_image_availability
 
 # host group for masters
 [masters]
@@ -1103,7 +1103,7 @@ ose3-master.example.com
 # However, in order to ensure that your masters are not burdened with running pods you should
 # make them unschedulable by adding openshift_schedulable=False any node that's also a master.
 [nodes]
-ose3-master.example.com openshift_node_group_name='node-config-master'
+ose3-master.example.com openshift_node_group_name='node-config-master-infra'
 ose3-node1.example.com openshift_ip=172.22.22.131 openshift_node_labels="{'region': 'primary', 'zone': 'default'}" openshift_node_group_name='node-config-compute'
 ose3-node2.example.com openshift_ip=172.22.22.132 openshift_node_labels="{'region': 'primary', 'zone': 'default'}" openshift_node_group_name='node-config-compute'
 
