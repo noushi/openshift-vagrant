@@ -2,6 +2,7 @@
 
 
 swapoff -a
+sed -i '/rhel-swap/ d'  /etc/fstab
 lvremove -f /dev/rhel/swap
 lvextend -l +100%FREE /dev/rhel/root 
 xfs_growfs /
