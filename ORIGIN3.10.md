@@ -12,6 +12,16 @@ ansible-playbook -i hosts-3.10.example ./pre-install.yml
 
 sed -i 's/python-docker/python-docker-py/' /usr/share/ansible/openshift-ansible/playbooks/init/base_packages.yml
 
+ansible all -i hosts-3.10.example -m yum -a "name=centos-release-openshift-origin310 state=present"
+
+ansible all -i hosts-3.10.example -m yum -a "name=yum-plugin-versionlock state=present"
+
+ansible all -i hosts-3.10.example -a 'yum versionlock origin*-3.10.0'
+
+ansible all -i hosts-3.10.example -a 'yum versionlock status'
+
+ssh root@ose3-master yum install origin{,-node,-hyperkube,-clients}-3.10.0 -y
+
 ansible-playbook -i hosts-3.10.example /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml 
 ansible-playbook -i hosts-3.10.example /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
 ```
