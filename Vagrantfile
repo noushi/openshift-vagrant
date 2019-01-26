@@ -38,9 +38,12 @@ Vagrant.configure("2") do |config|
     config.cache.scope = :box unless ENV['VAGRANT_CACHIER_BOX_CACHING'] == false
   end
 
-  # intel cards (e1000) are so buggy
   config.vm.provider "virtualbox" do |v|
+    # intel cards (e1000) are so buggy
     v.default_nic_type = "virtio"
+
+    # and piix3 chipsets kill download...
+    v.customize ["modifyvm", :id, "--chipset", "ich9"]
   end
 
   config.vm.define 'control', primary: true do |vmconfig|
