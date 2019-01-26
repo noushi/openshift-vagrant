@@ -1086,6 +1086,15 @@ openshift_use_crio_only=True
 openshift_crio_enable_docker_gc=True
 openshift_master_admission_plugin_config={"ValidatingAdmissionWebhook":{"configuration":{"kind": "DefaultAdmissionConfig","apiVersion": "v1","disable": false}},"MutatingAdmissionWebhook":{"configuration":{"kind": "DefaultAdmissionConfig","apiVersion": "v1","disable": false}}}
 
+# Cluster Monitoring Operator
+openshift_cluster_monitoring_operator_install=true
+openshift_cluster_monitoring_operator_prometheus_storage_capacity="5Gi"
+openshift_cluster_monitoring_operator_alertmanager_storage_capacity="1Gi"
+
+# Cockpit
+osm_use_cockpit=true
+osm_cockpit_plugins=['cockpit-kubernetes']
+
 openshift_disable_check=disk_availability,docker_storage,memory_availability,docker_image_availability
 
 # host group for masters
