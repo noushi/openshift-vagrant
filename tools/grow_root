@@ -2,6 +2,6 @@
 
 
 swapoff -a
-lvremove  /dev/rhel/swap 
+lvremove -f /dev/rhel/swap
 lvextend -l +100%FREE /dev/rhel/root 
 xfs_growfs /
