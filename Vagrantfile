@@ -7,17 +7,18 @@ GB=1024
 
 require 'fileutils'
 
-def prepare_disk(hostname)
+def disk_name(hostname, suffix)
   base_dir = '.vagrant/disks/' + hostname
   FileUtils.mkdir_p base_dir
-  base_dir + '/disk.vdi'
+  base_dir + '/disk' + suffix + '.vdi'
 end
 
-def add_disk(vb, disk, size)
+def add_disk(vb, hostname, size, port, dev)
+  disk = disk_name(hostname, "#{port}-#{dev}")
   unless File.exist?(disk)
     vb.customize ['createhd', '--filename', disk, '--variant', 'Standard', '--size', size]
   end
-  vb.customize ['storageattach', :id,  '--storagectl', 'IDE Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', disk]
+  vb.customize ['storageattach', :id,  '--storagectl', 'IDE Controller', '--port', port, '--device', dev, '--type', 'hdd', '--medium', disk]
 end
 
 Vagrant.configure("2") do |config|
@@ -59,8 +60,9 @@ Vagrant.configure("2") do |config|
     vmconfig.vm.provider "virtualbox" do |vb|
       vb.cpus = 4
       vb.memory = 1024
-      disk = prepare_disk vmconfig.vm.hostname
-      add_disk vb, disk, 5*GB
+
+      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 0
+      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 1
     end
   end
   
@@ -94,8 +96,9 @@ Vagrant.configure("2") do |config|
     vmconfig.vm.provider "virtualbox" do |vb|
       vb.cpus = 4
       vb.memory = 4096
-      disk = prepare_disk vmconfig.vm.hostname
-      add_disk vb, disk, 5*GB
+
+      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 0
+      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 1
     end
   end
 
@@ -113,8 +116,9 @@ Vagrant.configure("2") do |config|
     vmconfig.vm.provider "virtualbox" do |vb|
       vb.cpus = 4
       vb.memory = 4096
-      disk = prepare_disk vmconfig.vm.hostname
-      add_disk vb, disk, 5*GB
+
+      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 0
+      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 1
     end    
   end
 
@@ -132,8 +136,9 @@ Vagrant.configure("2") do |config|
     vmconfig.vm.provider "virtualbox" do |vb|
       vb.cpus = 4
       vb.memory = 4096
-      disk = prepare_disk vmconfig.vm.hostname
-      add_disk vb, disk, 5*GB
+
+      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 0
+      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 1
     end
   end
 
@@ -151,8 +156,9 @@ Vagrant.configure("2") do |config|
     vmconfig.vm.provider "virtualbox" do |vb|
       vb.cpus = 4
       vb.memory = 4096
-      disk = prepare_disk vmconfig.vm.hostname
-      add_disk vb, disk, 5*GB
+
+      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 0
+      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 1
     end    
   end
 
