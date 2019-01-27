@@ -61,8 +61,8 @@ Vagrant.configure("2") do |config|
       vb.cpus = 4
       vb.memory = 1024
 
-      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 0
-      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 1
+      add_disk vb, vmconfig.vm.hostname, 10*GB, 1, 0
+      add_disk vb, vmconfig.vm.hostname, 10*GB, 1, 1
     end
   end
   
@@ -97,8 +97,8 @@ Vagrant.configure("2") do |config|
       vb.cpus = 4
       vb.memory = 4096
 
-      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 0
-      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 1
+      add_disk vb, vmconfig.vm.hostname, 10*GB, 1, 0
+      add_disk vb, vmconfig.vm.hostname, 10*GB, 1, 1
     end
   end
 
@@ -117,8 +117,8 @@ Vagrant.configure("2") do |config|
       vb.cpus = 4
       vb.memory = 4096
 
-      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 0
-      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 1
+      add_disk vb, vmconfig.vm.hostname, 10*GB, 1, 0
+      add_disk vb, vmconfig.vm.hostname, 10*GB, 1, 1
     end    
   end
 
@@ -137,8 +137,8 @@ Vagrant.configure("2") do |config|
       vb.cpus = 4
       vb.memory = 4096
 
-      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 0
-      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 1
+      add_disk vb, vmconfig.vm.hostname, 10*GB, 1, 0
+      add_disk vb, vmconfig.vm.hostname, 10*GB, 1, 1
     end
   end
 
@@ -157,8 +157,8 @@ Vagrant.configure("2") do |config|
       vb.cpus = 4
       vb.memory = 4096
 
-      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 0
-      add_disk vb, vmconfig.vm.hostname, 5*GB, 1, 1
+      add_disk vb, vmconfig.vm.hostname, 10*GB, 1, 0
+      add_disk vb, vmconfig.vm.hostname, 10*GB, 1, 1
     end    
   end
 
