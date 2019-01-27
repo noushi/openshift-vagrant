@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#export SUBSCRIPTION_USERNAME=xxxxxxx
+#export SUBSCRIPTION_PASSWORD=xxxxxxx
+#export OPENSHIFT_SUBSCRIPTION="xxxxxxxx"
+
+ANSIBLE_EXTRA_OPTS="-i hosts-3.11-ocp.example -e oreg_auth_user=$SUBSCRIPTION_USERNAME -e oreg_auth_password=$SUBSCRIPTION_PASSWORD"
+
+# if using another subscription
+# ANSIBLE_EXTRA_OPTS="$ANSIBLE_EXTRA_OPTS -e 'openshift_subscription=\"$OPENSHIFT_SUBSCRIPTION\"'"
+
+# if more space is needed (to avoid disk pressure)
+#ansible  $ANSIBLE_EXTRA_OPTS   -a 'bash /vagrant/tools/grow_root' OSEv3 
+
+ansible $ANSIBLE_EXTRA_OPTS -a 'yum update -y' all
+
+ansible-playbook $ANSIBLE_EXTRA_OPTS set_subscriptions.yml
+
+ansible-playbook $ANSIBLE_EXTRA_OPTS  pre-check.yml
+
+sudo ansible-playbook $ANSIBLE_EXTRA_OPTS  pre-install.yml 
+
+ansible-playbook $ANSIBLE_EXTRA_OPTS  /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
+
+ansible-playbook $ANSIBLE_EXTRA_OPTS  /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
