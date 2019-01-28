@@ -5,6 +5,16 @@ load '../el-vagrant/Vagrantfile'
 
 GB=1024
 
+NODE_RAM=4096
+DISK_SIZE=10*GB
+
+machines= [
+  { name: "ose3-master", ip: "172.22.22.122", cpus: 4, mem: NODE_RAM, size: DISK_SIZE },
+  { name: "ose3-node1", ip: "172.22.22.131", cpus: 4, mem: NODE_RAM, size: DISK_SIZE },
+  { name: "ose3-node2", ip: "172.22.22.132", cpus: 4, mem: NODE_RAM, size: DISK_SIZE },
+  { name: "ose3-node3", ip: "172.22.22.133", cpus: 4, mem: NODE_RAM, size: DISK_SIZE },
+]
+
 require 'fileutils'
 
 def disk_name(hostname, suffix)
@@ -15,9 +25,11 @@ end
 
 def add_disk(vb, hostname, size, port, dev)
   disk = disk_name(hostname, "#{port}-#{dev}")
+
   unless File.exist?(disk)
     vb.customize ['createhd', '--filename', disk, '--variant', 'Standard', '--size', size]
   end
+
   vb.customize ['storageattach', :id,  '--storagectl', 'IDE Controller', '--port', port, '--device', dev, '--type', 'hdd', '--medium', disk]
 end
 
@@ -81,85 +93,29 @@ Vagrant.configure("2") do |config|
       vb.memory = 1024
     end
   end
-  
-  config.vm.define 'ose3-master' do |vmconfig|
-    vmconfig.vm.hostname = 'ose3-master.example.com'
-    vmconfig.vm.network :private_network, :ip => '172.22.22.122'
-    vmconfig.hostmanager.aliases = %w(ose3-master)
 
-    vmconfig.vm.provider :libvirt do |libvirt|
-      libvirt.memory = 4096
-      libvirt.cpus = 4
-      libvirt.storage :file, :device => 'vdb', :size => '20G', :type => 'qcow2', :cache => 'writeback'
+
+  machines.each do |m|
+    node = m[:name]
+    config.vm.define node do |c|
+      c.vm.hostname = "#{node}.example.com"
+      c.vm.network :private_network, :ip => m[:ip]
+      c.hostmanager.aliases = [node]
+
+      c.vm.provider :libvirt do |libvirt|
+        libvirt.memory = m[:mem]
+        libvirt.cpus = m[:cpus]
+        libvirt.storage :file, :device => 'vdb', :size => '20G', :type => 'qcow2', :cache => 'writeback'
+      end
+
+      c.vm.provider "virtualbox" do |vb|
+        vb.cpus = m[:cpus]
+        vb.memory = m[:mem]
+
+        add_disk vb, c.vm.hostname, m[:size], 1, 0
+        add_disk vb, c.vm.hostname, m[:size], 1, 1
+      end
     end
-
-    vmconfig.vm.provider "virtualbox" do |vb|
-      vb.cpus = 4
-      vb.memory = 4096
-
-      add_disk vb, vmconfig.vm.hostname, 10*GB, 1, 0
-      add_disk vb, vmconfig.vm.hostname, 10*GB, 1, 1
-    end
-  end
-
-  config.vm.define 'ose3-node1' do |vmconfig|
-    vmconfig.vm.hostname = 'ose3-node1.example.com'
-    vmconfig.vm.network :private_network, :ip => '172.22.22.131'
-    vmconfig.hostmanager.aliases = %w(ose3-node1)
-
-    vmconfig.vm.provider :libvirt do |libvirt|
-      libvirt.memory = 4096
-      libvirt.cpus = 4
-      libvirt.storage :file, :device => 'vdb', :size => '20G', :type => 'qcow2', :cache => 'writeback'
-    end
-
-    vmconfig.vm.provider "virtualbox" do |vb|
-      vb.cpus = 4
-      vb.memory = 4096
-
-      add_disk vb, vmconfig.vm.hostname, 10*GB, 1, 0
-      add_disk vb, vmconfig.vm.hostname, 10*GB, 1, 1
-    end    
-  end
-
-  config.vm.define 'ose3-node2' do |vmconfig|
-    vmconfig.vm.hostname = 'ose3-node2.example.com'
-    vmconfig.vm.network :private_network, :ip => '172.22.22.132'
-    vmconfig.hostmanager.aliases = %w(ose3-node2)
-
-    vmconfig.vm.provider :libvirt do |libvirt|
-      libvirt.memory = 4096
-      libvirt.cpus = 4
-      libvirt.storage :file, :device => 'vdb', :size => '20G', :type => 'qcow2', :cache => 'writeback'
-    end
-
-    vmconfig.vm.provider "virtualbox" do |vb|
-      vb.cpus = 4
-      vb.memory = 4096
-
-      add_disk vb, vmconfig.vm.hostname, 10*GB, 1, 0
-      add_disk vb, vmconfig.vm.hostname, 10*GB, 1, 1
-    end
-  end
-
-  config.vm.define 'ose3-node3' do |vmconfig|
-    vmconfig.vm.hostname = 'ose3-node3.example.com'
-    vmconfig.vm.network :private_network, :ip => '172.22.22.133'
-    vmconfig.hostmanager.aliases = %w(ose3-node3)
-
-    vmconfig.vm.provider :libvirt do |libvirt|
-      libvirt.memory = 4096
-      libvirt.cpus = 4
-      libvirt.storage :file, :device => 'vdb', :size => '20G', :type => 'qcow2', :cache => 'writeback'
-    end
-
-    vmconfig.vm.provider "virtualbox" do |vb|
-      vb.cpus = 4
-      vb.memory = 4096
-
-      add_disk vb, vmconfig.vm.hostname, 10*GB, 1, 0
-      add_disk vb, vmconfig.vm.hostname, 10*GB, 1, 1
-    end    
   end
 
 end
