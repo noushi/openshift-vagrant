@@ -1,8 +1,15 @@
 #!/bin/bash
 
+parted -s /dev/sdc mklabel gpt mkpart primary 0% 100% set 1 lvm on
+vgextend rhel /dev/sdc1
 
-swapoff -a
-sed -i '/rhel-swap/ d'  /etc/fstab
-lvremove -f /dev/rhel/swap
 lvextend -l +100%FREE /dev/rhel/root 
 xfs_growfs /
+
+# to recover swap space for /
+#swapoff -a
+#sed -i '/rhel-swap/ d'  /etc/fstab
+#sed -i 's|rd.lvm.lv=rhel/swap||'  /etc/default/grub 
+#grub2-mkconfig -o /boot/grub2/grub.cfg
+#systemctl daemon-reload
+#lvremove -f /dev/rhel/swap
