@@ -6,10 +6,11 @@ load '../el-vagrant/Vagrantfile'
 GB=1024
 
 NODE_RAM=4096
+MASTER_RAM=6144
 DISK_SIZE=10*GB
 
 machines= [
-  { name: "ose3-master", ip: "172.22.22.122", cpus: 4, mem: NODE_RAM, size: DISK_SIZE },
+  { name: "ose3-master", ip: "172.22.22.122", cpus: 4, mem: MASTER_RAM, size: DISK_SIZE },
   { name: "ose3-node1", ip: "172.22.22.131", cpus: 4, mem: NODE_RAM, size: DISK_SIZE },
   { name: "ose3-node2", ip: "172.22.22.132", cpus: 4, mem: NODE_RAM, size: DISK_SIZE },
   { name: "ose3-node3", ip: "172.22.22.133", cpus: 4, mem: NODE_RAM, size: DISK_SIZE },
