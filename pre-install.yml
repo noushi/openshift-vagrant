@@ -75,14 +75,14 @@
 #      when: configure_epel
 
   tasks:
-    - name: Enable Ansible ssh pipelining
-      ini_file:
-        path: /etc/ansible/ansible.cfg
-        section: ssh_connection
-        option: pipelining
-        value: True
-      delegate_to: localhost
-      run_once: true
+#    - name: Enable Ansible ssh pipelining
+#      ini_file:
+#        path: /etc/ansible/ansible.cfg
+#        section: ssh_connection
+#        option: pipelining
+#        value: True
+#      delegate_to: localhost
+#      run_once: true
 
     - name: Enable repos on control host
       command: "{{ rhsm_enable_repos }}"
