@@ -89,6 +89,7 @@
       when: ansible_distribution == "RedHat"
       delegate_to: localhost
       run_once: true
+      ignore_errors: true
 
     - name: Enable repos on OpenShift hosts
       command: "{{ rhsm_enable_repos }}"
