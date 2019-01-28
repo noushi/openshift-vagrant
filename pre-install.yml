@@ -151,6 +151,7 @@
       when: ansible_distribution == "RedHat"
       delegate_to: localhost
       run_once: true
+      ignore_errors: true
       tags: pre-install-pkgs, pkg
 
     - name: Install prerequisites on OpenShift hosts
